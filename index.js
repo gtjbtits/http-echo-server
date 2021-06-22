@@ -34,17 +34,17 @@ server.on('connection', function (c) {
     console.log('--> ' + chunk.toString().split('\n').join('\n--> '))
     if (!gotData) {
       gotData = true
-      write('HTTP/1.1 200 OK\r\n')
-      write('Date: ' + (new Date()).toString() + '\r\n')
-      write('Connection: close\r\n')
-      write('Content-Type: text/plain\r\n')
-      write('Access-Control-Allow-Origin: *\r\n')
-      write('\r\n')
+      write(c, 'HTTP/1.1 200 OK\r\n')
+      write(c, 'Date: ' + (new Date()).toString() + '\r\n')
+      write(c, 'Connection: close\r\n')
+      write(c, 'Content-Type: text/plain\r\n')
+      write(c, 'Access-Control-Allow-Origin: *\r\n')
+      write(c, '\r\n')
       setTimeout(function () {
         c.end()
       }, 2000)
     }
-    write(chunk.toString())
+    write(c, chunk.toString())
   })
 
   c.on('error', function (err) {
