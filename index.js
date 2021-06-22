@@ -34,17 +34,17 @@ server.on('connection', function (c) {
     console.log('--> ' + chunk.toString().split('\n').join('\n--> '))
     if (!gotData) {
       gotData = true
-      c.write('HTTP/1.1 200 OK\r\n')
-      c.write('Date: ' + (new Date()).toString() + '\r\n')
-      c.write('Connection: close\r\n')
-      c.write('Content-Type: text/plain\r\n')
-      c.write('Access-Control-Allow-Origin: *\r\n')
-      c.write('\r\n')
+      write('HTTP/1.1 200 OK\r\n')
+      write('Date: ' + (new Date()).toString() + '\r\n')
+      write('Connection: close\r\n')
+      write('Content-Type: text/plain\r\n')
+      write('Access-Control-Allow-Origin: *\r\n')
+      write('\r\n')
       setTimeout(function () {
         c.end()
       }, 2000)
     }
-    c.write(chunk.toString())
+    write(chunk.toString())
   })
 
   c.on('error', function (err) {
@@ -77,4 +77,9 @@ function onEmit (emitter, opts, cb) {
     if (opts.ignore.indexOf(eventName) === -1) cb.apply(null, arguments)
     return emitFn.apply(emitter, arguments)
   }
+}
+
+function write(connection, content) {
+  connection.write(content);
+  console.log(content);
 }
